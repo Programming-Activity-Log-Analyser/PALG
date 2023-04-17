@@ -1,0 +1,23 @@
+<configuration>
+
+	<property name="resourcesPath" value="${java.io.tmpdir}/PALG/activity-log.txt" />
+
+	<appender name="JSON_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${resourcesPath}</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${resourcesPath}_%d{yyyy-MM-dd}.%i.txt</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>10MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<maxHistory>7</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%msg,%n</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="com.intellij.palg" level="INFO">
+		<appender-ref ref="JSON_FILE" />
+	</logger>
+
+</configuration>

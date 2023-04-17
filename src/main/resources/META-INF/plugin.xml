@@ -1,0 +1,25 @@
+<idea-plugin>
+	<id>com.intellij.palg</id>
+
+	<!-- Text to display as name on Settings | Plugin page -->
+	<name>PALG: Programming Activity Log Generator</name>
+
+	<!-- Indicate this plugin can be loaded in all IntelliJ Platform-based products. -->
+	<depends>com.intellij.modules.platform</depends>
+
+	<!-- Text to display as description on Settings | Plugin page -->
+	<description>
+		<![CDATA[
+      Programming Activity Log Generator.
+      Generates JSON log files based on user activity.
+    ]]>
+	</description>
+
+	<vendor url="https://github.com/Programming-Activity-Log-Analyser/PALG">Rene Kütt</vendor>
+
+	<extensions defaultExtensionNs="com.intellij">
+		<editorFactoryListener implementation="com.intellij.palg.PalgListener"/>
+		<editorFactoryDocumentListener implementation="com.intellij.palg.PalgListener"/>
+		<copyPastePreProcessor implementation="com.intellij.palg.PalgListener"/>
+	</extensions>
+</idea-plugin>
