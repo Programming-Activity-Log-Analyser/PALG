@@ -109,7 +109,7 @@ class PalgListener : FileEditorManagerListener, DocumentListener, CopyPastePrePr
             time = PalgUtils.getCurrentDateTime(),
             sequence = "<Button-1>",
             textWidgetClass = "CodeViewText",
-            textWidgetId = getUUIDFromString(event.newFile.url)
+            textWidgetId = event.newFile?.url?.let { getUUIDFromString(it) }
         )
         logger.info { gson.toJson(activityData) }
     }
