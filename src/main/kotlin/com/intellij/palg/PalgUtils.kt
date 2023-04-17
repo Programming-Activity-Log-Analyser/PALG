@@ -7,6 +7,7 @@ import com.intellij.openapi.util.TextRange
 import com.intellij.openapi.vfs.VirtualFile
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 class PalgUtils {
     companion object {
@@ -16,9 +17,13 @@ class PalgUtils {
             return currentDateTime.format(formatter)
         }
 
-        fun getVirtualFileIdFromActiveEditor(document: Document): String? {
+        fun getVirtualFileUUIDByDocument(document: Document): String {
             val virtualFile: VirtualFile? = FileDocumentManager.getInstance().getFile(document)
-            return virtualFile?.presentableUrl
+            return getUUIDFromString(virtualFile?.url ?: "")
+        }
+
+        fun getVirtualFileURLByDocument(document: Document): String? {
+            return FileDocumentManager.getInstance().getFile(document)?.presentableUrl
         }
 
         fun getIndex(event: DocumentEvent, offset: Int): String{
@@ -35,6 +40,10 @@ class PalgUtils {
             val lineNum = text.count { it == '\n' } + 1
             val charPos = offset - text.lastIndexOf('\n') - 1
             return "$lineNum.$charPos"
+        }
+
+        fun getUUIDFromString(str: String): String {
+            return UUID.nameUUIDFromBytes(str.toByteArray()).toString()
         }
     }
 }

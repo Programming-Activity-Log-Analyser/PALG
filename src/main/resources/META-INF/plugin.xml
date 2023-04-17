@@ -17,8 +17,12 @@
 
 	<vendor url="https://github.com/Programming-Activity-Log-Analyser/PALG">Rene Kütt</vendor>
 
+	<projectListeners>
+		<listener class="com.intellij.palg.PalgListener"
+		          topic="com.intellij.openapi.fileEditor.FileEditorManagerListener"/>
+	</projectListeners>
+
 	<extensions defaultExtensionNs="com.intellij">
-		<editorFactoryListener implementation="com.intellij.palg.PalgListener"/>
 		<editorFactoryDocumentListener implementation="com.intellij.palg.PalgListener"/>
 		<copyPastePreProcessor implementation="com.intellij.palg.PalgListener"/>
 	</extensions>
