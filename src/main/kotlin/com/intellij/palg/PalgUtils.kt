@@ -26,6 +26,10 @@ class PalgUtils {
             return FileDocumentManager.getInstance().getFile(document)?.presentableUrl
         }
 
+        fun getVirtualFileByDocument(document: Document): VirtualFile? {
+            return FileDocumentManager.getInstance().getFile(document)
+        }
+
         fun getIndex(event: DocumentEvent, offset: Int): String{
             val text = event.document.getText(TextRange(0, offset))
             return getIndexFromString(text, offset)

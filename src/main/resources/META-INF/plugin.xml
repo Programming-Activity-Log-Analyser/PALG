@@ -20,6 +20,8 @@
 	<projectListeners>
 		<listener class="com.intellij.palg.PalgListener"
 		          topic="com.intellij.openapi.fileEditor.FileEditorManagerListener"/>
+		<listener class="com.intellij.palg.PalgListener"
+		          topic="com.intellij.execution.ExecutionListener"/>
 	</projectListeners>
 
 	<extensions defaultExtensionNs="com.intellij">

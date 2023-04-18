@@ -2,6 +2,9 @@ package com.intellij.palg
 
 import com.google.gson.GsonBuilder
 import com.intellij.codeInsight.editorActions.CopyPastePreProcessor
+import com.intellij.execution.ExecutionListener
+import com.intellij.execution.process.ProcessHandler
+import com.intellij.execution.runners.ExecutionEnvironment
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.editor.RawText
 import com.intellij.openapi.editor.event.DocumentEvent
@@ -16,7 +19,8 @@ import com.intellij.palg.model.ActivityData
 import com.intellij.psi.PsiFile
 import mu.KotlinLogging
 
-class PalgListener : FileEditorManagerListener, DocumentListener, CopyPastePreProcessor {
+
+class PalgListener : FileEditorManagerListener, DocumentListener, CopyPastePreProcessor, ExecutionListener {
 
     private val logger = KotlinLogging.logger {}
     private val gson = GsonBuilder().disableHtmlEscaping().create()
@@ -110,6 +114,18 @@ class PalgListener : FileEditorManagerListener, DocumentListener, CopyPastePrePr
             sequence = "<Button-1>",
             textWidgetClass = "CodeViewText",
             textWidgetId = event.newFile?.url?.let { getUUIDFromString(it) }
+        )
+        logger.info { gson.toJson(activityData) }
+    }
+
+    override fun processStarting(executorId: String, env: ExecutionEnvironment, handler: ProcessHandler) {
+        super.processStarted(executorId, env, handler)
+        val editor = FileEditorManager.getInstance(env.project).selectedTextEditor
+        val file = editor?.let { PalgUtils.getVirtualFileByDocument(it.document) }
+        val activityData = ActivityData(
+            time = PalgUtils.getCurrentDateTime(),
+            sequence = "ShellCommand",
+            commandText =  "%${executorId} ${file?.name}\\n",
         )
         logger.info { gson.toJson(activityData) }
     }
