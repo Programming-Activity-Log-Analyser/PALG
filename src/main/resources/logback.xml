@@ -1,13 +1,10 @@
 <configuration>
 
-	<property name="resourcesPath" value="${java.io.tmpdir}/PALG/activity-log.txt" />
+	<property name="resourcesPath" value="${java.io.tmpdir}/PALG/" />
+	<timestamp key="timestamp" datePattern="yyyy-MM-dd-HH-mm-ss" />
 
-	<appender name="JSON_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${resourcesPath}</file>
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${resourcesPath}_%d{yyyy-MM-dd}.txt</fileNamePattern>
-			<maxHistory>30</maxHistory>
-		</rollingPolicy>
+	<appender name="JSON_FILE" class="ch.qos.logback.core.FileAppender">
+		<file>${resourcesPath}activity-log_${timestamp}.txt</file>
 		<encoder>
 			<pattern>%msg,%n</pattern>
 		</encoder>
