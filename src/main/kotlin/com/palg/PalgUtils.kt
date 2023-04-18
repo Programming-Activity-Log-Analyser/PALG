@@ -1,4 +1,4 @@
-package com.intellij.palg
+package com.palg
 
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.editor.event.DocumentEvent

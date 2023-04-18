@@ -1,5 +1,5 @@
 <idea-plugin>
-	<id>com.intellij.palg</id>
+	<id>com.palg</id>
 
 	<!-- Text to display as name on Settings | Plugin page -->
 	<name>PALG: Programming Activity Log Generator</name>
@@ -18,14 +18,14 @@
 	<vendor url="https://github.com/Programming-Activity-Log-Analyser/PALG">Rene Kütt</vendor>
 
 	<projectListeners>
-		<listener class="com.intellij.palg.PalgListener"
+		<listener class="com.palg.PalgListener"
 		          topic="com.intellij.openapi.fileEditor.FileEditorManagerListener"/>
-		<listener class="com.intellij.palg.PalgListener"
+		<listener class="com.palg.PalgListener"
 		          topic="com.intellij.execution.ExecutionListener"/>
 	</projectListeners>
 
 	<extensions defaultExtensionNs="com.intellij">
-		<editorFactoryDocumentListener implementation="com.intellij.palg.PalgListener"/>
-		<copyPastePreProcessor implementation="com.intellij.palg.PalgListener"/>
+		<editorFactoryDocumentListener implementation="com.palg.PalgListener"/>
+		<copyPastePreProcessor implementation="com.palg.PalgListener"/>
 	</extensions>
 </idea-plugin>

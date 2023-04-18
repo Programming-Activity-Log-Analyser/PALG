@@ -13,7 +13,7 @@
 		</encoder>
 	</appender>
 
-	<logger name="com.intellij.palg" level="INFO">
+	<logger name="com.palg" level="INFO">
 		<appender-ref ref="JSON_FILE" />
 	</logger>
 

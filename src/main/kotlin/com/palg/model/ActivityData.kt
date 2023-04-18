@@ -1,4 +1,4 @@
-package com.intellij.palg.model
+package com.palg.model
 
 import com.google.gson.annotations.SerializedName
 

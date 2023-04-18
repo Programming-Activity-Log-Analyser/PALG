@@ -1,4 +1,4 @@
-package com.intellij.palg
+package com.palg
 
 import com.google.gson.GsonBuilder
 import com.intellij.codeInsight.editorActions.CopyPastePreProcessor
@@ -14,8 +14,8 @@ import com.intellij.openapi.fileEditor.FileEditorManagerEvent
 import com.intellij.openapi.fileEditor.FileEditorManagerListener
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
-import com.intellij.palg.PalgUtils.Companion.getUUIDFromString
-import com.intellij.palg.model.ActivityData
+import com.palg.PalgUtils.Companion.getUUIDFromString
+import com.palg.model.ActivityData
 import com.intellij.psi.PsiFile
 import mu.KotlinLogging
 
