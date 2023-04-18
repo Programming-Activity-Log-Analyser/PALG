@@ -96,15 +96,20 @@ class PalgListener : FileEditorManagerListener, DocumentListener, CopyPastePrePr
         )
         logger.info { gson.toJson(activityData) }
 
-        val activityDataTextInsert = ActivityData(
-            time = PalgUtils.getCurrentDateTime(),
-            sequence = "TextInsert",
-            text = source.selectedTextEditor?.document?.text ?: "",
-            textWidgetClass = "CodeViewText",
-            textWidgetId = getUUIDFromString(file.url),
-            index = "1.0"
-        )
-        logger.info { gson.toJson(activityDataTextInsert) }
+        val editor = source.getSelectedEditor(file)
+        if (editor is TextEditor) {
+            val textEditor: TextEditor = editor
+            val document: Document = textEditor.editor.document
+            val activityDataTextInsert = ActivityData(
+                time = PalgUtils.getCurrentDateTime(),
+                sequence = "TextInsert",
+                text = document.text,
+                textWidgetClass = "CodeViewText",
+                textWidgetId = getUUIDFromString(file.url),
+                index = "1.0"
+            )
+            logger.info { gson.toJson(activityDataTextInsert) }
+        }
     }
 
     override fun fileClosed(source: FileEditorManager, file: VirtualFile) {
