@@ -38,15 +38,27 @@ class PalgListener : FileEditorManagerListener, DocumentListener, CopyPastePrePr
             if(event.newFragment.toString().startsWith("IntellijIdeaRulezzz")){
                 return
             }
-            val activityData = ActivityData(
-                time = PalgUtils.getCurrentDateTime(),
-                sequence = "TextInsert",
-                text = event.newFragment.toString(),
-                textWidgetClass = "CodeViewText",
-                textWidgetId = PalgUtils.getVirtualFileUUIDByDocument(event.document),
-                index = PalgUtils.getIndex(event, event.offset)
-            )
-            logger.info { gson.toJson(activityData) }
+            if(PalgUtils.getVirtualFileByDocument(event.document) == null){ //shellText event
+                val activityData = ActivityData(
+                    time = PalgUtils.getCurrentDateTime(),
+                    sequence = "TextInsert",
+                    text = event.newFragment.toString(),
+                    textWidgetClass = "ShellText",
+                    index = PalgUtils.getIndex(event, event.offset)
+                )
+                logger.info { gson.toJson(activityData) }
+            }else{
+                val activityData = ActivityData(
+                    time = PalgUtils.getCurrentDateTime(),
+                    sequence = "TextInsert",
+                    text = event.newFragment.toString(),
+                    textWidgetClass = "CodeViewText",
+                    textWidgetId = PalgUtils.getVirtualFileUUIDByDocument(event.document),
+                    index = PalgUtils.getIndex(event, event.offset)
+                )
+                logger.info { gson.toJson(activityData) }
+            }
+
         } else if (newLength < oldLength) {
             val activityData = ActivityData(
                 time = PalgUtils.getCurrentDateTime(),
