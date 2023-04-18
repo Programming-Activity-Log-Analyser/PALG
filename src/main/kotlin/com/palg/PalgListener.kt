@@ -5,6 +5,7 @@ import com.intellij.codeInsight.editorActions.CopyPastePreProcessor
 import com.intellij.execution.ExecutionListener
 import com.intellij.execution.process.ProcessHandler
 import com.intellij.execution.runners.ExecutionEnvironment
+import com.intellij.openapi.editor.Document
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.editor.RawText
 import com.intellij.openapi.editor.event.DocumentEvent
@@ -12,6 +13,7 @@ import com.intellij.openapi.editor.event.DocumentListener
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.fileEditor.FileEditorManagerEvent
 import com.intellij.openapi.fileEditor.FileEditorManagerListener
+import com.intellij.openapi.fileEditor.TextEditor
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.palg.PalgUtils.Companion.getUUIDFromString
@@ -29,6 +31,7 @@ class PalgListener : FileEditorManagerListener, DocumentListener, CopyPastePrePr
         val oldLength = event.oldLength
         val newLength = event.newLength
         val changedVirtualFileURL = PalgUtils.getVirtualFileURLByDocument(event.document) ?: ""
+        val virtualFile = PalgUtils.getVirtualFileByDocument(event.document)
 
         if(changedVirtualFileURL.startsWith("https:")){
             return
@@ -38,7 +41,7 @@ class PalgListener : FileEditorManagerListener, DocumentListener, CopyPastePrePr
             if(event.newFragment.toString().startsWith("IntellijIdeaRulezzz")){
                 return
             }
-            if(PalgUtils.getVirtualFileByDocument(event.document) == null){ //shellText event
+            if(virtualFile == null){ //shellText event
                 val activityData = ActivityData(
                     time = PalgUtils.getCurrentDateTime(),
                     sequence = "TextInsert",
@@ -47,7 +50,7 @@ class PalgListener : FileEditorManagerListener, DocumentListener, CopyPastePrePr
                     index = PalgUtils.getIndex(event, event.offset)
                 )
                 logger.info { gson.toJson(activityData) }
-            }else{
+            }else if(!virtualFile.url.startsWith("mock:")){ //shellText event
                 val activityData = ActivityData(
                     time = PalgUtils.getCurrentDateTime(),
                     sequence = "TextInsert",
@@ -60,15 +63,17 @@ class PalgListener : FileEditorManagerListener, DocumentListener, CopyPastePrePr
             }
 
         } else if (newLength < oldLength) {
-            val activityData = ActivityData(
-                time = PalgUtils.getCurrentDateTime(),
-                sequence = "TextDelete",
-                textWidgetClass = "CodeViewText",
-                textWidgetId = PalgUtils.getVirtualFileUUIDByDocument(event.document),
-                index1 = PalgUtils.getIndex(event, event.offset),
-                index2 = PalgUtils.getIndex2(event, event.offset)
-            )
-            logger.info { gson.toJson(activityData) }
+            if(virtualFile?.url?.startsWith("mock:") == false) { //shellText event
+                val activityData = ActivityData(
+                    time = PalgUtils.getCurrentDateTime(),
+                    sequence = "TextDelete",
+                    textWidgetClass = "CodeViewText",
+                    textWidgetId = PalgUtils.getVirtualFileUUIDByDocument(event.document),
+                    index1 = PalgUtils.getIndex(event, event.offset),
+                    index2 = PalgUtils.getIndex2(event, event.offset)
+                )
+                logger.info { gson.toJson(activityData) }
+            }
         }
     }
 
@@ -142,7 +147,7 @@ class PalgListener : FileEditorManagerListener, DocumentListener, CopyPastePrePr
         val activityData = ActivityData(
             time = PalgUtils.getCurrentDateTime(),
             sequence = "ShellCommand",
-            commandText =  "%${executorId} ${file?.name}\\n",
+            commandText =  "%${executorId} ${file?.name}",
         )
         logger.info { gson.toJson(activityData) }
     }
