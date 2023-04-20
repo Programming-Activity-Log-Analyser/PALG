@@ -34,6 +34,11 @@ tasks {
     compileKotlin {
         kotlinOptions.jvmTarget = "17"
     }
+
+    runPluginVerifier {
+        ideVersions.set(
+            listOf("2022.1", "2023.1"))
+    }
 }
 
 
