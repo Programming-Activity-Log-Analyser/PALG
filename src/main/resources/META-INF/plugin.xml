@@ -13,7 +13,7 @@
     <p>
 	  The Programming Activity Log Generator (PALG) is an IntelliJ IDEA plugin that generates log files based on user activity. The plugin logs various actions such as text insertions, deletions, pasting, file opening, closing, switching, running, and debugging.
 	<br/><br/>
-	  You can navigate to the log file folder by using the "Open log files folder" button under Tools -> PALG.
+	  You can navigate to the log file folder by using the "PALG: Open Log Folder" button after right-clicking in an open editor.
 	<br/><br/>
 	  The purpose of PALG is to enable teachers to track student work by capturing their development activities in log files. PALA (Programming Activity Log Analyzer) can then be used as a web application to analyze the contents of these log files and provide concise analysis results. PALA is capable of opening zip files recursively, allowing for easy analysis of multiple student submissions in a zip file format. PALA works well with Moodle VPL's "Download all submissions" action, which provides a zip file in the format mentioned above.
 	<br/><br/>
@@ -39,4 +39,10 @@
 		<editorFactoryDocumentListener implementation="com.palg.PalgListener"/>
 		<copyPastePreProcessor implementation="com.palg.PalgListener"/>
 	</extensions>
+
+	<actions>
+		<action id="com.palg.openLogFolderAction" class="com.palg.actions.OpenLogFolderAction" text="PALG: Open Log Folder" description="Opens log files folder">
+			<add-to-group group-id="EditorPopupMenu" anchor="last"/>
+		</action>
+	</actions>
 </idea-plugin>
