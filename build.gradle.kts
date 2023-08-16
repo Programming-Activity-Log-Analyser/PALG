@@ -4,7 +4,7 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version "1.8.20"
 }
 
-version = "1.0"
+version = "1.1"
 
 repositories {
     mavenCentral()
@@ -28,7 +28,7 @@ tasks {
     patchPluginXml {
         version.set("${project.version}")
         sinceBuild.set("222")
-        untilBuild.set("231.*")
+        untilBuild.set("232.*")
     }
 
     compileKotlin {
