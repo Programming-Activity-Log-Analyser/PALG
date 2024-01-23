@@ -48,6 +48,10 @@
 
 	<change-notes><![CDATA[
         <p>
+        	Version 1.2:
+            <ul>
+                <li>Bumped IntelliJ compatibility range to support 241.*</li>
+            </ul>
             Version 1.1:
             <ul>
                 <li>Bumped IntelliJ compatibility range to support 232.*</li>
