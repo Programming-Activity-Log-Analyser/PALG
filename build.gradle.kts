@@ -28,7 +28,7 @@ tasks {
     patchPluginXml {
         version.set("${project.version}")
         sinceBuild.set("222")
-        untilBuild.set("232.*")
+        untilBuild.set("241.*")
     }
 
     compileKotlin {
@@ -37,7 +37,7 @@ tasks {
 
     runPluginVerifier {
         ideVersions.set(
-            listOf("2022.1", "2023.1"))
+            listOf("2022.1", "2024.1"))
     }
 }
 
