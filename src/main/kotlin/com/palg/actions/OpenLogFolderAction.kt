@@ -7,7 +7,7 @@ import java.nio.file.Paths
 
 class OpenLogFolderAction : DumbAwareAction(){
     override fun actionPerformed(event: AnActionEvent) {
-        val tmpDir = System.getProperty("java.io.tmpdir")
-        RevealFileAction.openDirectory(Paths.get("$tmpDir/PALG"))
+        val tmpDir = System.getProperty("user.home")
+        RevealFileAction.openDirectory(Paths.get("$tmpDir/PALG_logs"))
     }
 }

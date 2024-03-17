@@ -1,6 +1,6 @@
 <configuration>
 
-	<property name="resourcesPath" value="${java.io.tmpdir}/PALG/" />
+	<property name="resourcesPath" value="${user.home}/PALG_logs/" />
 	<timestamp key="timestamp" datePattern="yyyy-MM-dd-HH-mm-ss" />
 
 	<appender name="JSON_FILE" class="ch.qos.logback.core.FileAppender">
