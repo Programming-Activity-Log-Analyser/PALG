@@ -107,7 +107,7 @@ class PalgListener : FileEditorManagerListener, DocumentListener, CopyPastePrePr
             val document: Document = textEditor.editor.document
             val activityDataTextInsert = ActivityData(
                 time = PalgUtils.getCurrentDateTime(),
-                sequence = "TextInsert",
+                sequence = "FileContent",
                 text = document.text,
                 textWidgetClass = "CodeViewText",
                 textWidgetId = getUUIDFromString(file.url),
