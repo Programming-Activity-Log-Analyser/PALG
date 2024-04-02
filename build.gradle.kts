@@ -4,7 +4,7 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version "1.8.20"
 }
 
-version = "1.2"
+version = "1.3"
 
 repositories {
     mavenCentral()
