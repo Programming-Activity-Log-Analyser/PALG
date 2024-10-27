@@ -16,13 +16,18 @@ import com.intellij.openapi.fileEditor.FileEditorManagerListener
 import com.intellij.openapi.fileEditor.TextEditor
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
+import com.intellij.openapi.vfs.newvfs.BulkFileListener
+import com.intellij.openapi.vfs.newvfs.events.VFileCreateEvent
+import com.intellij.openapi.vfs.newvfs.events.VFileDeleteEvent
+import com.intellij.openapi.vfs.newvfs.events.VFileEvent
+import com.intellij.psi.PsiFile
 import com.palg.PalgUtils.Companion.getUUIDFromString
 import com.palg.model.ActivityData
-import com.intellij.psi.PsiFile
 import mu.KotlinLogging
 
 
-class PalgListener : FileEditorManagerListener, DocumentListener, CopyPastePreProcessor, ExecutionListener {
+class PalgListener : FileEditorManagerListener, DocumentListener, CopyPastePreProcessor, ExecutionListener,
+    BulkFileListener {
 
     private val logger = KotlinLogging.logger {}
     private val gson = GsonBuilder().disableHtmlEscaping().create()
@@ -90,6 +95,35 @@ class PalgListener : FileEditorManagerListener, DocumentListener, CopyPastePrePr
         return text ?: ""
     }
 
+    override fun after(events: List<VFileEvent>) {
+        for (event in events) {
+            when (event) {
+                is VFileCreateEvent -> handleFileCreation(event)
+                is VFileDeleteEvent -> handleFileDeletion(event)
+            }
+        }
+    }
+
+    fun handleFileCreation(event: VFileCreateEvent) {
+        val activityData = ActivityData(
+            time = PalgUtils.getCurrentDateTime(),
+            sequence = "fileCreated",
+            textWidgetId = event.file?.let { getUUIDFromString(it.url) },
+            filename = event.file?.name
+        )
+        logger.info { gson.toJson(activityData) }
+    }
+
+    fun handleFileDeletion(event: VFileDeleteEvent) {
+        val activityData = ActivityData(
+            time = PalgUtils.getCurrentDateTime(),
+            sequence = "fileDeleted",
+            textWidgetId = getUUIDFromString(event.file.url),
+            filename = event.file.name
+        )
+        logger.info { gson.toJson(activityData) }
+    }
+
     override fun fileOpened(source: FileEditorManager, file: VirtualFile) {
         super.fileOpened(source, file)
         val activityData = ActivityData(
@@ -97,7 +131,7 @@ class PalgListener : FileEditorManagerListener, DocumentListener, CopyPastePrePr
             sequence = "Open",
             textWidgetClass = "CodeViewText",
             textWidgetId = getUUIDFromString(file.url),
-            filename = file.presentableUrl
+            filename = file.name
         )
         logger.info { gson.toJson(activityData) }
 
@@ -124,7 +158,7 @@ class PalgListener : FileEditorManagerListener, DocumentListener, CopyPastePrePr
             sequence = "Close",
             textWidgetClass = "CodeViewText",
             textWidgetId = getUUIDFromString(file.url),
-            filename = file.presentableUrl
+            filename = file.name
         )
         logger.info { gson.toJson(activityData) }
     }

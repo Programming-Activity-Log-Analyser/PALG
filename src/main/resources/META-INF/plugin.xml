@@ -33,6 +33,8 @@
 		          topic="com.intellij.openapi.fileEditor.FileEditorManagerListener"/>
 		<listener class="com.palg.PalgListener"
 		          topic="com.intellij.execution.ExecutionListener"/>
+		<listener class="com.palg.PalgListener"
+				  topic="com.intellij.openapi.vfs.newvfs.BulkFileListener"/>
 	</projectListeners>
 
 	<extensions defaultExtensionNs="com.intellij">
@@ -48,6 +50,10 @@
 
 	<change-notes><![CDATA[
         <p>
+        	Version 1.5:
+            <ul>
+                <li>Added file creation and deletion events</li>
+            </ul>
         	Version 1.4:
             <ul>
                 <li>Bumped IntelliJ compatibility range to support 243.*</li>
