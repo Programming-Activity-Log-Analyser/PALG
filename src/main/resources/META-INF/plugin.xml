@@ -50,6 +50,10 @@
 
 	<change-notes><![CDATA[
         <p>
+       		 Version 1.5:
+            <ul>
+                <li>Bumped IntelliJ compatibility range to support 251.*</li>
+            </ul>
         	Version 1.5:
             <ul>
                 <li>Added file creation and deletion events</li>
